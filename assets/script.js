@@ -16,7 +16,7 @@ function renderButtons() {
 
     //generate buttons for each item in the array
         var buttonCreate = $("<button>");
-        buttonCreate.addClass("dog-buttons");
+        buttonCreate.addClass("dog-buttons hvr-underline-from-center");
         buttonCreate.attr("data-breed", dogBreeds[i]);
         buttonCreate.text(dogBreeds[i]);
         $("#buttons").append(buttonCreate);
