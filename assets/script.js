@@ -1,17 +1,19 @@
+$(document).ready(function() {
+
 //Initial array of dog breeds
 var dogBreeds = ["German Shepherd", "Labrador Retriever", "Golden Retriever", "Beagle", "Poodle", "Daschund", "Chihuahua", "Pomeranian", "Dalmation", "Great Dane", "Corgi", "Terrier"];
 
 //function to display the buttons to the page
 function renderButtons() {
-    //DEBUGGING  OMITTED FOR TESTING --> $("#buttons").empty();
+    $("#buttons").empty();
     
     //loop through the array of dog breeds
     for (var i=0; i<dogBreeds.length; i++) {
     
     //DEBUGGING  OMITTED FOR TESTING --> 
-    //    var breedName = dogBreeds[i].attr("data-breed");
+    //var breedName = dogBreeds[i].attr("data-breed");
     //
-      
+
     //generate buttons for each item in the array
         var buttonCreate = $("<button>");
         buttonCreate.addClass("dog-buttons");
@@ -19,6 +21,7 @@ function renderButtons() {
         buttonCreate.text(dogBreeds[i]);
         $("#buttons").append(buttonCreate);
     }
+
     // This function handles when the search submit button is clicked
     $("#add-breed").on("click", function(event) {
     // Preventing the buttons default behavior when clicked (which is submitting a form)
@@ -38,6 +41,7 @@ function renderButtons() {
     //Constructing a URL to search Giphy for the selected dog breed
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         dog + "&api_key=J6FUoIJ1BDIiSpFUwi2NMxNWW2MboYwt&limit=10";
+    console.log(queryURL);  
 
     // Performing our AJAX GET request
     $.ajax({
@@ -53,13 +57,13 @@ function renderButtons() {
         for (var i = 0; i < results.length; i++) {
 
             // Creating a var for the gif display section of the page
-            var gifDiv = $("<div>");
+            var gifDiv = $("<div class='gif-divs'>");
 
             // Storing the result item's rating
             var rating = results[i].rating;
 
             // Creating a paragraph tag with the result item's rating
-            var p = $("<p>").text("Rating: " + rating);
+            var p = $("<p class='rating-text'>").text("Rating: " + rating);
 
             // Creating an image tag
             var dogImage = $("<img>");
@@ -80,11 +84,11 @@ function renderButtons() {
             $("#images-main").prepend(gifDiv);
             }
     
-        })
+        
 
     //This function toggles the static and animatd states of the gifs when they are clicked
     $(".gif").on("click", function() {
-        var sate = $(this).attr("data-state");
+        var state = $(this).attr("data-state");
         if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
             $(this).attr("data-state", "animate");
@@ -94,12 +98,12 @@ function renderButtons() {
         }
     });
     });
+    });
+
 };
-    // Calling the renderButtons function to display the intial buttons
-    renderButtons();
-
-
-
+// Calling the renderButtons function to display the intial buttons
+renderButtons();
+});
 
 {/* <button class="dog-buttons" data-breed="German Shepherd">
 German Shepherd

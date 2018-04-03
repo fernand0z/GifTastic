@@ -5,58 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>GifTastic - Fernando Zacarias</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />    
     <script src="assets/script.js"></script>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.slim.js"
-    integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
-    crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css">
+    <!-- Font Awesome CSS Icons (For cool glyphicons) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="jumbotron"><h1 id="heading1">GifTastic</h1><br>
-    <h2 i="heading2">Variety of Dog Breeds</h2>
+    <div class="jumbotron"><h1 id="heading1">Variety of Dog Breeds</h1><br>
+    <h2 id="heading2">GifTastic</h2>
     </div>
-        <div id="buttons">
-            <!-- <button class="dog-buttons" data-breed="German Shepherd">
-                German Shepherd
-            </button>
-            <button class="dog-buttons" data-breed="Labrador Retriever">
-                Labrador Retriever
-            </button>
-            <button class="dog-buttons" data-breed="Golden Retriever">
-                Golden Retriever
-            </button>
-            <button class="dog-buttons" data-breed="Beagle">
-                Beagle
-            </button>
-            <button class="dog-buttons" data-breed="Poodle">
-                Poodle
-            </button>
-            <button class="dog-buttons" data-breed="Daschund">
-                Daschund
-            </button>
-            <button class="dog-buttons" data-breed="Chihuahua">
-                Chihuahua
-            </button>
-            <button class="dog-buttons" data-breed="Pomeranian">
-                Pomeranian
-            </button> -->
-
-            <form id="search-form">
-                <label for="search-input">Add another dog breed:</label>
-                <input type="text" id="search-input">
-                <br>
-
+        <div class="row">
+            <div id="buttons" class="col-sm-12 col-md-8">
+            </div>
+            <div id="form-div" class="col-sm-12 col-md-4">
+                <form id="search-form" class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <label for="search-input">Add another dog breed:</label>
+                    </div>
+                    <input type="text" id="search-input">
+                    <br>
                 <input id="add-breed" type="submit" value="Submit">
-            </form>
+                </form>
+            </div>
         </div>
-
         <div id="images-main">
-
         </div>
-        
+        <script src="assets/script.js"></script>
 </body>
 </html>
+
