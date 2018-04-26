@@ -1,109 +1,113 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
-//Initial array of dog breeds
-var dogBreeds = ["German Shepherd", "Labrador Retriever", "Golden Retriever", "Beagle", "Poodle", "Daschund", "Chihuahua", "Pomeranian", "Dalmation", "Great Dane", "Corgi", "Terrier"];
+    //Initial array of dog breeds
+    var categories = ["lodging", "restaurant", "night_club", "liquor_store"];
 
-//function to display the buttons to the page
-function renderButtons() {
-    $("#buttons").empty();
-    
-    //loop through the array of dog breeds
-    for (var i=0; i<dogBreeds.length; i++) {
-    
-    //DEBUGGING  OMITTED FOR TESTING --> 
-    //var breedName = dogBreeds[i].attr("data-breed");
-    //
+    //function to display the buttons to the page
+    function renderButtons() {
+        $("#buttons").empty();
 
-    //generate buttons for each item in the array
-        var buttonCreate = $("<button>");
-        buttonCreate.addClass("dog-buttons hvr-underline-from-center");
-        buttonCreate.attr("data-breed", dogBreeds[i]);
-        buttonCreate.text(dogBreeds[i]);
-        $("#buttons").append(buttonCreate);
-    }
+        //loop through the array of dog breeds
+        for (var i = 0; i < categories.length; i++) {
 
-    // This function handles when the search submit button is clicked
-    $("#add-breed").on("click", function(event) {
-    // Preventing the buttons default behavior when clicked (which is submitting a form)
-    event.preventDefault();
-    // This line grabs the input from the textbox
-    var breed = $("#search-input").val().trim();
-    // Adding the search query from the textbox to our array
-    dogBreeds.push(breed);
-    // Calling renderButtons which handles the processing of our movie array
-    renderButtons();
-    })
-    
-    //This function listens for clicks on one of the dog breed buttons
-    $(".dog-buttons").on("click", function() {
-        var dog = $(this).attr("data-breed");
+            //DEBUGGING  OMITTED FOR TESTING --> 
+            //var breedName = dogBreeds[i].attr("data-breed");
+            //
 
-    //Constructing a URL to search Giphy for the selected dog breed
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-        dog + "&api_key=J6FUoIJ1BDIiSpFUwi2NMxNWW2MboYwt&limit=10";
-    console.log(queryURL);  
+            //generate buttons for each item in the array
+            var buttonCreate = $("<button>");
+            buttonCreate.addClass("category-buttons hvr-underline-from-center");
+            buttonCreate.attr("data-category", categories[i]);
+            buttonCreate.text(categories[i]);
+            $("#buttons").append(buttonCreate);
 
-    // Performing our AJAX GET request
-    $.ajax({
-    url: queryURL,
-    method: "GET"
-    })
-    // After the data comes back from the API
-    .then(function(response) {
-        // Storing an array of results in the results variable
-        var results = response.data;
-        console.log(results);
-        // Looping over every result item
-        for (var i = 0; i < results.length; i++) {
+            var latitude = '21.276';
+            var longitude = '-157.820';
+            var location = "location=" + latitude + "," + longitude + "&radius=500";
+            var type = "&type=" + categories[i];
+            var urlKey = "&key=AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc";
+            //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=33.303,-111.838&radius=500&type=lodging&key=AIzaSyBKV1JVEtr31cn9Hpi6L8d-dCN8cCSQISc
 
-            // Creating a var for the gif display section of the page
-            var gifDiv = $("<div class='gif-divs'>");
+            var queryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + location + type + urlKey;
+            console.log(queryURL);
 
-            // Storing the result item's rating
-            var rating = results[i].rating;
+            // Creating an AJAX call for the specific movie button being clicked
+            $.ajax({
+                url: queryURL,
+                dataType: 'jsonp',
+                method: "GET"
+            }).then(function (response) {
 
-            // Creating a paragraph tag with the result item's rating
-            var p = $("<p class='rating-text'>").text("Rating: " + rating);
+                // //Constructing a URL to pull from Google API
+                // var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+                //     dog + "&api_key=J6FUoIJ1BDIiSpFUwi2NMxNWW2MboYwt&limit=10";
+                // console.log(queryURL);  
 
-            // Creating an image tag
-            var dogImage = $("<img>");
+                // // Performing our AJAX GET request
+                // $.ajax({
+                // url: queryURL,
+                // method: "GET"
+                // })
+                // // After the data comes back from the API
+                // .then(function(response) {
+                // Storing an array of results in the results variable
+                var resultsData = response.results;
+                console.log(resultsData);
+                // Looping over every result item
+                for (var i = 0; i < resultsData.length; i++) {
 
-            // Giving the image tag an src attribute of a proprty pulled off the
-            // result item
-            dogImage.attr("src", results[i].images.fixed_height_still.url);
-            dogImage.attr("data-still", results[i].images.fixed_height_still.url);
-            dogImage.attr("data-animate", results[i].images.fixed_height.url);
-            dogImage.attr("data-state", "still");
-            dogImage.attr("class", "gif");
+                    // Creating a var for the gif display section of the page
+                    var gifDiv = $("<div class='gif-divs'>");
+
+                    // Storing the result item's rating
+                    var name = resultsData[0].name;
+
+                    // Creating a paragraph tag with the result item's rating
+                    var p = $("<p class='name-text'>").text("Hotel: " + name);
+
+                    // Creating an image tag
+                    // var resultsImage = $("<img>");
+
+                    // // Giving the image tag an src attribute of a proprty pulled off the
+                    // // result item
+                    // dogImage.attr("src", results[i].images.fixed_height_still.url);
+                    // dogImage.attr("data-still", results[i].images.fixed_height_still.url);
+                    // dogImage.attr("data-animate", results[i].images.fixed_height.url);
+                    // dogImage.attr("data-state", "still");
+                    // dogImage.attr("class", "gif");
+
+                    // Appending the paragraph and dogImage we created to the "gifDiv" div we created
+                    gifDiv.append(p);
+                    // gifDiv.append(dogImage);
+
+                    // Prepending the gifDiv to the "#images-main" div in the HTML
+                    $("#images-main").prepend(gifDiv);
+                };
             
-            // Appending the paragraph and dogImage we created to the "gifDiv" div we created
-            gifDiv.append(p);
-            gifDiv.append(dogImage);
-
-            // Prepending the gifDiv to the "#images-main" div in the HTML
-            $("#images-main").prepend(gifDiv);
-            }
-    
         
+            });
+        };
 
-    //This function toggles the static and animatd states of the gifs when they are clicked
-    $(".gif").on("click", function() {
-        var state = $(this).attr("data-state");
-        if (state === "still") {
-            $(this).attr("src", $(this).attr("data-animate"));
-            $(this).attr("data-state", "animate");
-        } else {
-            $(this).attr("src", $(this).attr("data-still"));
-            $(this).attr("data-state", "still");
-        }
-    });
-    });
-    });
 
-};
-// Calling the renderButtons function to display the intial buttons
-renderButtons();
+//     //This function toggles the static and animatd states of the gifs when they are clicked
+//     $(".gif").on("click", function() {
+//         var state = $(this).attr("data-state");
+//         if (state === "still") {
+//             $(this).attr("src", $(this).attr("data-animate"));
+//             $(this).attr("data-state", "animate");
+//         } else {
+//             $(this).attr("src", $(this).attr("data-still"));
+//             $(this).attr("data-state", "still");
+//         }
+    
+//     });
+
+    };
 });
+// Calling the renderButtons function to display the intial buttons
+//renderButtons();
+
+
 
 {/* <button class="dog-buttons" data-breed="German Shepherd">
 German Shepherd
@@ -128,4 +132,5 @@ Chihuahua
 </button>
 <button class="dog-buttons" data-breed="Pomeranian">
 Pomeranian
-</button> */}
+</button> */
+};
